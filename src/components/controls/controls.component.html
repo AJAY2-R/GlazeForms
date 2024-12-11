@@ -1,10 +1,14 @@
 <div>
-    <div class="text-center" (click)="onClick()"> CONTROLS </div>
-    <div class="flex flex-col gap-5">
-        @for (item of controls; track $index) {
-        <div class="ring-1 ring:border-gray-500 text-center p-1 rounded-md bg-gray-500">
-            {{item}}
-        </div>
-        }
+  <div class="text-center" (click)="onClick()">CONTROLS</div>
+  <div class="flex flex-col gap-5">
+    @for (item of controls; track $index) {
+    <div
+      class="ring-1 ring:border-gray-500 text-center p-1 rounded-md bg-gray-200 cursor-pointer text-blue-800"
+      glDrag
+      [data]="item"
+    >
+      {{ item }}
     </div>
+    }
+  </div>
 </div>

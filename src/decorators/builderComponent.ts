@@ -6,7 +6,7 @@ export function builderComponent(name: string) {
     return function (target: Type<IGlazeComponent>) {
         const onInit = target.prototype.ngOnInit;
         target.prototype.ngOnInit = function (...args: any[]) {
-            GlazeFormRegistry.addComponent(this.COMPONENT_ID, target);
+            GlazeFormRegistry.addComponent(this.id, target);
             if (onInit) {
                 onInit.apply(this, args);
             }

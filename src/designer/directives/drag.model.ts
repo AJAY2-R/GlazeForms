@@ -1,0 +1,1 @@
+export type IGlDragData = { data: string, event: DragEvent }

@@ -13,9 +13,9 @@ export class StyleService {
 
   public buildStyle(id: string, style: Record<string, string>) {
     if (this._styleElements.has(id)) {
-      this._styleElements.get(id)!.innerHTML = this.generateStyle(style);
+      this._styleElements.get(id)!.innerHTML = this.generateStyle(id, style);
     } else {
-      this.createStyleElement(id).innerHTML = this.generateStyle(style);
+      this.createStyleElement(id).innerHTML = this.generateStyle(id, style);
     }
   }
 
@@ -31,12 +31,12 @@ export class StyleService {
     return styleElement;
   }
 
-  private generateStyle(properties: Record<string, string>) {
-    let style = '';
+  private generateStyle(id: string, properties: Record<string, string>) {
+    let style = `[${id}] { `;
     for (const [key, value] of Object.entries(properties)) {
       style += `${key}: ${value}; `;
     }
-    return style;
+    return style + ' }';
   }
 
 }

@@ -1,19 +1,18 @@
+:host {
+  width: 100%;
+}
+
 .gl-grid {
   display: grid;
   grid-gap: 10px;
-
   .gl-grid-cell {
     width: 1fr;
+    padding: 2px;
     min-height: 25px;
     border: 1px dashed #ccc;
-    background-color: #f3eeee;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    &:hover .cell-content {
-      display: block;
-    }
   }
 
   .cell-content {

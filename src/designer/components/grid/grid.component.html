@@ -1,10 +1,7 @@
 <div class="gl-grid" #elem>
-  @for (rows of grid; track $index;let rowIdx = $index) { @for (cell of rows;
-  track $index;let cellIdx = $index) {
-  <div class="gl-grid-cell" grid1>
-    <span class="cell-content" (click)="addComponent(rowIdx, cellIdx, $event)"
-      >+</span
-    >
-  </div>
-  } }
+  @for (rows of grid; track $index;let rowIdx = $index) { 
+    @for (cell of rows;track $index;let cellIdx = $index) {
+      <div class="gl-grid-cell" glDrop (ondrop)="onDrop($event, rowIdx, cellIdx)"></div>
+    } 
+  }
 </div>
