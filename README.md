@@ -1,6 +1,10 @@
 # GlazeForms
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
+GlazeForms is a dynamic form builder designed to empower users to create forms effortlessly through a drag-and-drop interface. Inspired by projects like Grapes.js, GlazeForms provides essential components such as buttons and other basic elements, making it intuitive and user-friendly.
+
+Our vision goes beyond form building — we aim to extend GlazeForms into an Event Executor, allowing users to visually design interactive functionality by dragging and dropping JavaScript-based activities.
+
+This project is proudly built using Angular, and while it is a work in progress, I am committed to improving it day by day. My current code may not be perfect, but I welcome and appreciate your valuable suggestions to make GlazeForms better with every iteration.
 
 ## Development server
 
