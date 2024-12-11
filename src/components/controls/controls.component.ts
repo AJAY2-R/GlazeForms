@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ComponentRegistery } from '../../Registery/ComponentRegister';
-import { GlazeFormRegistery } from '../../Registery/GlazeFormRegistery';
+import { ComponentRegistry } from 'Registry/ComponentRegister';
+import { GlazeFormRegistry } from 'Registry/GlazeFormRegistry';
 
 @Component({
   selector: 'gl-controls',
@@ -9,9 +9,9 @@ import { GlazeFormRegistery } from '../../Registery/GlazeFormRegistery';
   styleUrl: './controls.component.scss'
 })
 export class ControlsComponent {
-  controls = ComponentRegistery.components;
-  
-  onClick(){
-    console.log(GlazeFormRegistery.getAllComponents());
+  controls = ComponentRegistry.components;
+
+  onClick() {
+    console.log(GlazeFormRegistry.getAllComponents());
   }
 }

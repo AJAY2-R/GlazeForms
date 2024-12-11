@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { builderComponent } from '../../../decorators/builderComponent';
 import { IGlazeComponent } from '../../../models/IComponent';
+import { GlazeComponent } from 'designer/render/GlazeComponent';
+import { ICoreStyle } from 'models/ICore.Properties';
 
 @builderComponent("button")
 @Component({
@@ -9,16 +11,10 @@ import { IGlazeComponent } from '../../../models/IComponent';
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class ButtonComponent implements IGlazeComponent {
+export class ButtonComponent extends GlazeComponent {
 
-  public render(): HTMLElement {
-    throw new Error('Method not implemented.');
-  }
-  public update(): void {
-    throw new Error('Method not implemented.');
-  }
-  public destroy(): void {
-    throw new Error('Method not implemented.');
+  constructor() {
+    super();
   }
 
 }
