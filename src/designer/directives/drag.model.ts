@@ -1,1 +1,1 @@
-export type IGlDragData = { data: string, event: DragEvent }
+export interface IGlDragData { type: string, event: DragEvent }

@@ -1,13 +1,12 @@
-import { Component, ElementRef } from '@angular/core';
-import { builderComponent } from '../../../decorators/builderComponent';
-import { IGlazeComponent } from '../../../models/IComponent';
+import { Component } from '@angular/core';
+import { SelectDirective } from 'designer/directives/select.directive';
 import { GlazeComponent } from 'designer/render/GlazeComponent';
-import { ICoreStyle } from 'models/ICore.Properties';
+import { builderComponent } from '../../../decorators/builderComponent';
 
 @builderComponent("button")
 @Component({
   selector: 'gl-button',
-  imports: [],
+  imports: [SelectDirective],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })

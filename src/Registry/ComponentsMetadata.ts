@@ -5,7 +5,6 @@ import { TextblockComponent } from "designer/components/textblock/textblock.comp
 import { TextboxComponent } from "designer/components/textbox/textbox.component";
 import { GlazeComponent } from "designer/render/GlazeComponent";
 
-
 export const components: Record<string, Type<GlazeComponent>> = {
     "grid": GridComponent,
     "button": ButtonComponent,
@@ -13,11 +12,10 @@ export const components: Record<string, Type<GlazeComponent>> = {
     "textblock": TextblockComponent
 }
 
-
 @Injectable({
     providedIn: 'root'
 })
-export class ComponentMetadata {
+export class ComponentMetadataService {
     private _components: Map<string, Type<GlazeComponent>> = Object.keys(components).reduce((acc, key) => {
         acc.set(key, components[key]);
         return acc;

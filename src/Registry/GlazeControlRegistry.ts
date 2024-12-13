@@ -1,9 +1,9 @@
 import { Type } from "@angular/core";
-import { IGlazeComponent } from "../models/IComponent";
 import { Subject } from "rxjs";
+import { IGlazeComponent } from "../models/IComponent";
 import { StyleRegistry } from "./StyleRegistry";
 
-export class GlazeFormRegistry {
+export class GlazeControlRegistry {
     private static _glazeMap: Map<string, Type<IGlazeComponent>> = new Map();
 
     public static addComponent(id: string, glaze: Type<IGlazeComponent>): void {

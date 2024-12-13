@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.gl-highlight {
+    outline: 2px solid rgb(151, 13, 215);
+}

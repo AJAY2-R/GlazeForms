@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Host, HostListener, output } from '@angular/core';
+import { Directive, ElementRef, HostListener, output } from '@angular/core';
 import { IGlDragData } from './drag.model';
 
 @Directive({
@@ -26,7 +26,8 @@ export class DropDirective {
 
   @HostListener('drop', ['$event']) onDrop(event: DragEvent) {
     event.preventDefault();
-    this.ondrop.emit({ data: event.dataTransfer!.getData('text'), event: event });
+    const type = event.dataTransfer!.getData('text') as string;
+    this.ondrop.emit({ type: type, event: event });
   }
 
   @HostListener('mouseover', ['$event']) onHover(event: MouseEvent) {

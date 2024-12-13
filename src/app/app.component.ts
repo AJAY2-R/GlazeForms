@@ -1,11 +1,11 @@
+/* eslint-disable @angular-eslint/component-selector */
 import { Component, ViewContainerRef } from '@angular/core';
-import { SidepanelComponent } from "../components/sidepanel/sidepanel.component";
-import { FramepanelComponent } from "../components/framepanel/framepanel.component";
+import { MainPanelComponent } from "../components/main-panel/main-panel.component";
 import { RenderService } from '../services/render.service';
 
 @Component({
   selector: 'app-root',
-  imports: [SidepanelComponent, FramepanelComponent],
+  imports: [MainPanelComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DragDirective } from 'designer/directives/drag.directive';
-import { ComponentMetadata } from 'Registry/ComponentsMetadata';
-import { GlazeFormRegistry } from 'Registry/GlazeFormRegistry';
+import { ComponentMetadataService } from 'Registry/ComponentsMetadata';
+import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 
 @Component({
   selector: 'gl-controls',
@@ -11,11 +11,11 @@ import { GlazeFormRegistry } from 'Registry/GlazeFormRegistry';
 })
 export class ControlsComponent {
   controls: string[] = [];
-  constructor(private componentMetadata: ComponentMetadata) {
+  constructor(private componentMetadata: ComponentMetadataService) {
     this.controls = componentMetadata.components;
   }
 
   onClick() {
-    console.log(GlazeFormRegistry.getAllComponents());
+    console.log(GlazeControlRegistry.getAllComponents());
   }
 }

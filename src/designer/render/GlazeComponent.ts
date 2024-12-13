@@ -1,11 +1,11 @@
-import { ElementRef, inject, InjectionToken, Injector, ViewChild } from "@angular/core";
-import { IGlazeComponent } from "models/IComponent";
+import { inject, InjectionToken, Injector } from "@angular/core";
+import { DesignerControlService } from "designer/services/designer.control.service";
+import { ICoreProperties, IGlazeComponent } from "models/IComponent";
 import { ICoreStyle } from "models/ICore.Properties";
 import { StyleService } from "services/style.service";
 import { StyleCreator } from "services/StyleCreator";
 
 export class GlazeComponent<T extends ICoreStyle = ICoreStyle> implements IGlazeComponent {
-
     styleService = inject(StyleService);
     injector = Injector.create({
         providers: [
@@ -13,15 +13,24 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle> implements IGlaze
         ]
     })
 
-    public id = this.injector.get(COMPONENT_ID);
-    public properties!: T;
-
+    public control: ICoreProperties<T> = {
+        id: this.injector.get(COMPONENT_ID),
+        type: '',
+        parentProperties: {},
+        name: '',
+        properties: {} as T
+    }
+    private designerService: DesignerControlService = inject(DesignerControlService);
+    constructor() {
+        this.initializeProperty();
+        this.designerService.setSelectedControl(this.control.id);
+    }
     render() {
         console.log('render');
     }
 
     update() {
-        this.styleService.buildStyle(this.id, this.buildStyle());
+        this.styleService.buildStyle(this.control.id, this.buildStyle());
     }
 
     destroy() {
@@ -35,6 +44,13 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle> implements IGlaze
             .properties;
     }
 
+    public initializeProperty(): void {
+
+    }
+
+    get properties(): T {
+        return this.control.properties;
+    }
 }
 
 export const COMPONENT_ID = new InjectionToken<string>('COMPONENT_ID');
