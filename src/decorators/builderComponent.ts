@@ -6,7 +6,7 @@ export function builderComponent(name: string) {
     return function (target: Type<IGlazeComponent>) {
         const onInit = target.prototype.ngOnInit;
         target.prototype.ngOnInit = function (...args: unknown[]) {
-            GlazeControlRegistry.addComponent(this.control.id, target);
+            GlazeControlRegistry.addComponent(this.control.id, this);
             this.control.type = name;
             if (onInit) {
                 onInit.apply(this, args);
@@ -14,3 +14,4 @@ export function builderComponent(name: string) {
         }
     }
 }
+

@@ -11,12 +11,10 @@ export class DesignerControlService {
   private onControlSelected$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   setSelectedControl(control: string) {
-    console.log("UPDATED SELECTED CONTROL", control);
-    setTimeout(() => {
-      console.log("PRoperties", this.getProperties());
-    }, 1000);
-    this._selectedControl = control;
-    this.onControlSelected$.next(control);
+    if(this.selectedControl != control){
+      this._selectedControl = control;
+      this.onControlSelected$.next(control);
+    }
   }
 
   get onControlChange$() {
@@ -24,7 +22,8 @@ export class DesignerControlService {
   }
 
   getProperties(controlId: string = this._selectedControl) {
-    return GlazeControlRegistry.getAllComponents().get(controlId)!.prototype.control.properties;
+    const component = GlazeControlRegistry.getAllComponents().get(controlId)!;
+    return component.properties;
   }
 
   get selectedControl() {

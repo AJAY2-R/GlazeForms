@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { SelectDirective } from 'designer/directives/select.directive';
 import { GlazeComponent } from 'designer/render/GlazeComponent';
 
 @Component({
   selector: 'gl-textbox',
-  imports: [],
+  imports: [SelectDirective],
   templateUrl: './textbox.component.html',
   styleUrl: './textbox.component.scss'
 })
