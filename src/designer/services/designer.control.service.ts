@@ -3,18 +3,20 @@ import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DesignerControlService {
-
   private _selectedControl = '';
-  private onControlSelected$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private onControlSelected$: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   setSelectedControl(control: string) {
-    if(this.selectedControl != control){
-      this._selectedControl = control;
-      this.onControlSelected$.next(control);
-    }
+    setTimeout(() => {
+      if (this.selectedControl != control) {
+        this._selectedControl = control;
+        this.onControlSelected$.next(control);
+      }
+    });
   }
 
   get onControlChange$() {
@@ -22,8 +24,8 @@ export class DesignerControlService {
   }
 
   getProperties(controlId: string = this._selectedControl) {
-    const component = GlazeControlRegistry.getAllComponents().get(controlId)!;
-    return component.properties;
+    const component = GlazeControlRegistry.getAllComponents().get(controlId);
+    return component?.properties;
   }
 
   get selectedControl() {

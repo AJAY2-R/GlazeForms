@@ -1,0 +1,9 @@
+<div class="flex flex-col">
+  <h1>Properties</h1>
+  @for (key of keys; track $index) {
+    <div class="flex">
+        <p>{{key}} : </p>
+        <div>{{properties?.[key]}}</div>
+    </div>
+  }
+</div>
