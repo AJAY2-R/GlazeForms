@@ -16,6 +16,6 @@ export class ControlsComponent {
   }
 
   onClick() {
-    console.log(GlazeControlRegistry.getAllComponents());
+    console.log(GlazeControlRegistry.instance.getAllComponents());
   }
 }

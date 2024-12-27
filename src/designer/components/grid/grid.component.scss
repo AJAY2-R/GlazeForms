@@ -1,8 +1,13 @@
+:host {
+  width: 100%;
+}
+
 .gl-grid {
   display: grid;
   grid-gap: 10px;
   height: 100%;
   width: 100%;
+
   .gl-grid-cell {
     width: 1fr;
     padding: 2px;

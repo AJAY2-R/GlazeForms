@@ -2,17 +2,38 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { IGlDragData } from 'designer/directives/drag.model';
 import { DropDirective } from 'designer/directives/drop.directive';
 import { SelectDirective } from 'designer/directives/select.directive';
-import { GlazeComponent } from 'designer/render/GlazeComponent';
+import { GlazeComponent } from 'designer/components/render/GlazeComponent';
 import { ComponentMetadataService } from 'Registry/ComponentsMetadata';
 import { StyleCreator } from 'services/StyleCreator';
 import { builderComponent } from '../../../decorators/builderComponent';
 import { RenderService } from '../../../services/render.service';
 import { IGridProperties } from './grid.properties';
 
-@builderComponent("grid")
+@builderComponent({
+  name: "Grid",
+  description: "Grid component",
+  properties: [
+    {
+      name: "rows",
+      editorId: "valueEditor",
+      title: "Rows",
+      options: {
+        type: "number",
+      }
+    },
+    {
+      name: "columns",
+      editorId: "valueEditor",
+      title: "Columns",
+      options: {
+        type: "number",
+      }
+    }
+  ]
+})
 @Component({
   selector: 'gl-grid',
-  imports: [DropDirective,SelectDirective],
+  imports: [DropDirective, SelectDirective],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss'
 })
@@ -53,6 +74,11 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
       rows: 3,
       columns: 3
     }
+  }
+
+  override update(): void {
+    this.grid = this.generateGrid();
+    super.update();
   }
 
 }

@@ -1,23 +1,13 @@
 import { Injectable, Type } from "@angular/core";
-import { ButtonComponent } from "designer/components/button/button.component";
-import { GridComponent } from "designer/components/grid/grid.component";
-import { TextblockComponent } from "designer/components/textblock/textblock.component";
-import { TextboxComponent } from "designer/components/textbox/textbox.component";
-import { GlazeComponent } from "designer/render/GlazeComponent";
-
-export const components: Record<string, Type<GlazeComponent>> = {
-    "grid": GridComponent,
-    "button": ButtonComponent,
-    "textbox": TextboxComponent,
-    "textblock": TextblockComponent
-}
+import { GlazeComponent } from "@glaze/components";
+import { COMPONENTS } from "./components";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ComponentMetadataService {
-    private _components: Map<string, Type<GlazeComponent>> = Object.keys(components).reduce((acc, key) => {
-        acc.set(key, components[key]);
+    private _components: Map<string, Type<GlazeComponent>> = Object.keys(COMPONENTS).reduce((acc, key) => {
+        acc.set(key, COMPONENTS[key]);
         return acc;
     }, new Map<string, Type<GlazeComponent>>());
 

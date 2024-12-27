@@ -9,6 +9,8 @@ export abstract class IGlazeComponent<T extends ICoreStyle = ICoreStyle> {
     public abstract initializeProperty(): void;
     public abstract buildStyle(): Record<string, string>;
     public abstract get properties(): T;
+    public abstract setProperty(propertyName: string, value: unknown): void;
+    public abstract getProperty(propertyName: string): unknown;
 }
 
 export type IComponent = Type<IGlazeComponent>

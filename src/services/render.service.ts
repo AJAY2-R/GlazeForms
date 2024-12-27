@@ -1,5 +1,4 @@
-import { ElementRef, Injectable, ViewContainerRef } from '@angular/core';
-import { IComponent, IGlazeComponent } from '../models/IComponent';
+import { Injectable, Injector, Type, ViewContainerRef } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +6,16 @@ import { IComponent, IGlazeComponent } from '../models/IComponent';
 export class RenderService {
   public viewContainerRef!: ViewContainerRef
 
-  renderComponent(elementRef: HTMLElement, component: IComponent) {
-    elementRef.innerHTML = '';
-    const elemComponent = this.viewContainerRef.createComponent(component);
-    elementRef.appendChild(elemComponent.location.nativeElement);
+  renderComponent<T = Type<any>>(ref: HTMLElement | ViewContainerRef, component: Type<T>, injector?: Injector): T {
+    if (ref instanceof HTMLElement) {
+      ref.innerHTML = '';
+      const elemComponent = this.viewContainerRef.createComponent(component);
+      ref.appendChild(elemComponent.location.nativeElement);
+      return elemComponent.instance as T;
+    } else {
+      ref.clear();
+      const cmp = ref.createComponent(component, { injector });
+      return cmp.instance as T;
+    }
   }
 }

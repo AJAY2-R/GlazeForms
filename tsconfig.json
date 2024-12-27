@@ -19,7 +19,8 @@
     "module": "ES2022",
     "baseUrl": "src",
     "paths": {
-      "@glaze/models": ["models/index.ts"]
+      "@glaze/models": ["models/index.ts"],
+      "@glaze/components": ["designer/components/index.ts"]
     }
   },
   "angularCompilerOptions": {

@@ -6,8 +6,7 @@ import { StyleService } from 'services/style.service';
 import { StyleCreator } from 'services/StyleCreator';
 
 export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
-  implements IGlazeComponent
-{
+  implements IGlazeComponent {
   styleService = inject(StyleService);
   injector = Injector.create({
     providers: [{ provide: COMPONENT_ID, useFactory: getUID }],
@@ -46,7 +45,7 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
       .buildBorder(this.properties.border).properties;
   }
 
-  public initializeProperty(): void {}
+  public initializeProperty(): void { }
 
   get properties(): T {
     return this.control.properties;
@@ -54,7 +53,13 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
 
   setProperty(propertyName: string, value: unknown) {
     (this.control.properties as ICoreStyle)[propertyName] = value;
+    this.update();
   }
+
+  getProperty(propertyName: string): unknown {
+    return (this.control.properties as ICoreStyle)[propertyName];
+  }
+
 }
 
 export const COMPONENT_ID = new InjectionToken<string>('COMPONENT_ID');
