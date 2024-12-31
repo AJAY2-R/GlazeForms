@@ -22,18 +22,12 @@ export class ComponentEditorComponent {
       this.properties = [];
       const context = GlazeControlRegistry.instance.getComponent(this.designerService.selectedControl)?.context;
       if (context) {
-        const keys = Object.keys(this.designerService.getProperties() ?? {});
-        this.properties = keys.map((key) => {
-          const contextProps = context.properties.find((prop) => prop.name === key);
-          if (contextProps?.editorId) {
+        this.properties = context.properties.map((prop) => {
+          if (prop?.editorId) {
             return {
-              name: key,
-              title: contextProps.title,
-              editorId: contextProps.editorId,
-              value: this.getProperty(key),
-              defaultValue: contextProps?.defaultValue,
-              options: contextProps?.options,
-            } as IGlazeProperty;
+              ...prop,
+              value: this.getProperty(prop.name),
+            };
           } else {
             return null;
           }

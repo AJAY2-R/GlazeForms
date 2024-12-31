@@ -1,0 +1,32 @@
+<div>
+  <h1>{{ context.title }}</h1>
+  <div class="flex flex-col">
+    <div class="flex gap-4">
+      <div class="flex flex-col">
+        <label for="">Style</label>
+        <select class="ring-1 rounded-md" [(ngModel)]="value.style" (ngModelChange)="onChange()">
+          <option value="none">None</option>
+          <option value="solid">Solid</option>
+          <option value="dashed">Dashed</option>
+          <option value="dotted">Dotted</option>
+          <option value="double">Double</option>
+          <option value="groove">Groove</option>
+          <option value="ridge">Ridge</option>
+          <option value="inset">Inset</option>
+          <option value="outset">Outset</option>
+        </select>
+      </div>
+      <div class="flex flex-col">
+        <label for="">Width</label>
+        <gl-size-mapper [(size)]="value.width" (sizeChange)="onChange()"></gl-size-mapper>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <label for="">Color</label>
+      <input type="color" class="ring-1 rounded-md" [(ngModel)]="value.color" (ngModelChange)="onChange()" />
+    </div>
+    <div class="flex flex-col">
+      <label for="">Radius</label>
+      <gl-size-mapper [(size)]="value.borderRadius" (sizeChange)="onChange()"></gl-size-mapper>
+  </div>
+</div>

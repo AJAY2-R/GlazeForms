@@ -28,6 +28,16 @@ import { IGridProperties } from './grid.properties';
       options: {
         type: "number",
       }
+    },
+    {
+      name: 'backgroundColor',
+      editorId: 'backgroundColorEditor',
+      title: 'Background Color',
+    },
+    {
+      name: 'border',
+      editorId: 'borderEditor',
+      title: 'Border',
     }
   ]
 })
@@ -47,7 +57,6 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
   }
 
   ngAfterViewInit() {
-    this.elem.nativeElement.setAttribute(this.control.id, '');
     super.update();
   }
 
@@ -62,7 +71,7 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
   override buildStyle(): Record<string, string> {
     return StyleCreator.create()
       .buildGridTemplate(this.properties.rows, this.properties.columns)
-      .properties;
+      .buildCore(this.properties)
   }
 
   onDrop(data: IGlDragData, row: number, col: number) {

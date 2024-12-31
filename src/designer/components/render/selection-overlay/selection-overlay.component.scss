@@ -1,0 +1,8 @@
+:host {
+    position: absolute;
+    pointer-events: none;
+    padding: 5px;
+    border: 2px solid rgb(206, 22, 231);
+    box-shadow: 0 0 10px rgba(26, 26, 26, 0.303);
+    z-index: 1000;
+}

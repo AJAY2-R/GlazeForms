@@ -1,0 +1,10 @@
+<div class="ring ring-1 rounded-md" >
+  <input
+    type="number"
+    [(ngModel)]="size.value"
+    (ngModelChange)="onValueChange()"
+  />
+  <select [(ngModel)]="size.unit" (ngModelChange)="onValueChange()">
+    <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+  </select>
+</div>

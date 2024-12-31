@@ -1,4 +1,5 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, input } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, input, ViewContainerRef } from '@angular/core';
+import { SelectionOverlayService } from 'designer/components/render/selection-overlay/selection-overlay.service';
 import { DesignerControlService } from 'designer/services/designer.control.service';
 
 @Directive({
@@ -7,13 +8,14 @@ import { DesignerControlService } from 'designer/services/designer.control.servi
 export class SelectDirective implements AfterViewInit {
 
   id = input.required<string>({ alias: 'glSelect' });
-  constructor(private elementRef: ElementRef<HTMLElement>, private designerService: DesignerControlService) {
+  constructor(private elementRef: ElementRef<HTMLElement>, private designerService: DesignerControlService,
+    private selectionOverlayService: SelectionOverlayService, viewContainerRef: ViewContainerRef) {
+    this.selectionOverlayService.viewContainerRef = viewContainerRef;
   }
 
   ngAfterViewInit(): void {
-    this.designerService.onControlChange$.subscribe(control => {
-      this.toggleHighlight(control === this.id());
-    });
+    this.elementRef.nativeElement.setAttribute(this.id(), '');
+    this.toggleHighlight(true);
   }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
@@ -24,8 +26,9 @@ export class SelectDirective implements AfterViewInit {
   }
 
   toggleHighlight(value: boolean) {
-    this.elementRef.nativeElement.classList.toggle('gl-highlight', value);
+    if (value) {
+      this.selectionOverlayService.setOverlay(this.elementRef.nativeElement, value);
+    }
   }
-
 
 }

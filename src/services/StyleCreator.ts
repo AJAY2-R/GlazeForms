@@ -1,4 +1,5 @@
-import { IBorder } from "models/ICore.Properties";
+import { getSize, ICoreStyle } from "models/ICore.Properties";
+import { IBorder } from "property-editors/components/border-editor/border";
 
 export class StyleCreator {
     static create() {
@@ -29,8 +30,16 @@ export class StyleCreator {
     }
 
     buildBorder(border?: IBorder) {
-        if (border)
-            this.properties['border'] = `${border.width}px ${border.style} ${border.color}`;
+        if (border) {
+            this.properties['border'] = `${getSize(border.width)} ${border.style} ${border.color}`;
+            this.properties['border-radius'] = getSize(border.borderRadius);
+        }
         return this;
+    }
+
+    buildCore(properties: ICoreStyle) {
+        return this.buildBackground(properties.backgroundColor)
+            .buildBorder(properties.border)
+            .properties;
     }
 }

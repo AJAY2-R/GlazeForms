@@ -42,7 +42,8 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
   buildStyle() {
     return StyleCreator.create()
       .buildBackground(this.properties.backgroundColor)
-      .buildBorder(this.properties.border).properties;
+      .buildBorder(this.properties.border)
+      .properties;
   }
 
   public initializeProperty(): void { }

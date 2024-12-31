@@ -1,0 +1,8 @@
+<div>
+  <h1>{{ context.title }}</h1>
+  <gl-size-mapper
+    [(size)]="value"
+    [units]="units"
+    (sizeChange)="onValueChange()"
+  ></gl-size-mapper>
+</div>

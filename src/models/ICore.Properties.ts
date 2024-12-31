@@ -1,3 +1,5 @@
+import { IBorder } from "property-editors/components/border-editor/border";
+
 export interface ICoreStyle {
   backgroundColor?: string;
   size?: IControlSize;
@@ -10,11 +12,7 @@ export interface IControlSize {
   width: ISize;
   height: ISize;
 }
-export interface IBorder {
-  width: ISize;
-  style: string;
-  color: string;
-}
+
 export interface IMargin {
   top: ISize;
   right: ISize;
@@ -29,13 +27,21 @@ export interface IPadding {
 }
 
 export interface ISize {
-  size?: number;
+  value: number;
   unit: Size;
 }
 
 export enum Size {
-  px = 'px',
-  em = 'em',
-  rem = 'rem',
-  percent = '%',
+  Pixel = 'px',
+  Em = 'em',
+  Rem = 'rem',
+  Percent = '%',
+  ViewportWidth = 'vw',
+  ViewportHeight = 'vh',
+  Auto = 'auto'
+}
+
+
+export function getSize(size: ISize) {
+  return `${size.value}${size.unit}`;
 }

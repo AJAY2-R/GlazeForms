@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { ICoreStyle, ISize } from 'models/ICore.Properties';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +16,6 @@ export class StyleService {
     } else {
       this.createStyleElement(id).innerHTML = this.generateStyle(id, style);
     }
-  }
-
-  static size(size: ISize) {
-    return `${size.size}${size.unit}`;
   }
 
   private createStyleElement(id: string): HTMLStyleElement {

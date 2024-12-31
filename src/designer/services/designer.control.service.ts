@@ -17,7 +17,7 @@ export class DesignerControlService {
         this._selectedControl = control;
         this.onControlSelected$.next(control);
       }
-    });
+    },100);
   }
 
   get onControlChange$() {
