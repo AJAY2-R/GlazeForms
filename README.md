@@ -6,6 +6,11 @@ Our vision goes beyond form building — we aim to extend GlazeForms into an Eve
 
 This project is proudly built using Angular, and while it is a work in progress, I am committed to improving it day by day. My current code may not be perfect, but I welcome and appreciate your valuable suggestions to make GlazeForms better with every iteration.
 
+##Screenshots
+
+![image](https://github.com/user-attachments/assets/d3fd0da1-beda-4fef-86e0-8aa36ebd367d)
+
+
 ## Development server
 
 To start a local development server, run:
