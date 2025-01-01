@@ -1,5 +1,6 @@
 import { Component, inject, Injector, input, InputSignal, ViewContainerRef, OnChanges } from '@angular/core';
 import { IGlazeProperty } from 'decorators/builderComponent';
+import { PropertyEditorService } from 'designer/services/property.editor.service';
 import { IPropertyEditor } from 'models/IPropertyEditor';
 import { EDITOR_CONTEXT } from 'property-editors/propertyEditors';
 import { PropertyEditorMapRegistry } from 'Registry/PropertyEditorMapRegistry';
@@ -14,9 +15,9 @@ import { RenderService } from 'services/render.service';
 export class PropertyEditorComponent implements OnChanges {
   name: InputSignal<string> = input.required<string>();
   context: InputSignal<IGlazeProperty> = input.required<IGlazeProperty>();
-  viewContainerRef = inject(ViewContainerRef);
-  renderService = inject(RenderService);
-
+  private viewContainerRef = inject(ViewContainerRef);
+  private renderService = inject(RenderService);
+  private propertyEditorService = inject(PropertyEditorService);
   ngOnChanges() {
     this.renderEditor();
   }
@@ -28,7 +29,8 @@ export class PropertyEditorComponent implements OnChanges {
         { provide: EDITOR_CONTEXT, useValue: this.context() }
       ]
     })
-    this.renderService.renderComponent<IPropertyEditor>(this.viewContainerRef, component, injector);
+    const ref = this.renderService.renderComponent<IPropertyEditor>(this.viewContainerRef, component, injector);
+    this.propertyEditorService.addPropertyEditor(this.context().name, ref);
   }
 
 }

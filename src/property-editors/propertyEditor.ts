@@ -18,7 +18,6 @@ import { EDITOR_CONTEXT } from 'property-editors/propertyEditors';
  */
 export class PropertyEditor<T = unknown> implements IPropertyEditor {
     designerService = inject(DesignerControlService);
-    private component = this.designerService.getControlComponent();
     public context: IGlazeProperty = inject(EDITOR_CONTEXT);
     private propertyName: string = this.context.name;
 
@@ -35,7 +34,11 @@ export class PropertyEditor<T = unknown> implements IPropertyEditor {
         }
     }
 
-    update(value: unknown): void {
-        this.component.setProperty(this.propertyName, value);
+    /**
+     * Updates the property value for the component.
+     */
+    update(value: unknown = this.value): void {
+        this.value = value as T;
+        this.designerService.setControlProperty(this.propertyName, this.value);
     }
 }

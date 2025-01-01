@@ -77,10 +77,8 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
   }
 
   override initializeProperty(): void {
-    this.control.properties = {
-      rows: 3,
-      columns: 3
-    } as IGridProperties;
+    this.control.properties.rows = 3;
+    this.control.properties.columns = 3;
   }
 
   override update(): void {
