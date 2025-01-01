@@ -3,10 +3,8 @@ import { IGlDragData } from 'designer/directives/drag.model';
 import { DropDirective } from 'designer/directives/drop.directive';
 import { SelectDirective } from 'designer/directives/select.directive';
 import { GlazeComponent } from 'designer/components/render/GlazeComponent';
-import { ComponentMetadataService } from 'Registry/ComponentsMetadata';
 import { StyleCreator } from 'services/StyleCreator';
 import { builderComponent } from '../../../decorators/builderComponent';
-import { RenderService } from '../../../services/render.service';
 import { IGridProperties } from './grid.properties';
 
 @builderComponent({
@@ -51,7 +49,7 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
   @ViewChild('elem', { static: true }) elem!: ElementRef<HTMLElement>;
   grid: number[][] = [];
 
-  constructor(private renderService: RenderService, private componentMetadata: ComponentMetadataService) {
+  constructor() {
     super();
     this.grid = this.generateGrid();
   }
@@ -65,7 +63,7 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
   }
 
   addComponent(componentName: string, row: number, col: number, event: Event) {
-    this.renderService.renderComponent(event.target as HTMLElement, this.componentMetadata.getComponent(componentName));
+    this.designerService.addControl(event.target as HTMLElement, componentName, this.control.id, { row, col, id: this.control.id });
   }
 
   override buildStyle(): Record<string, string> {
@@ -82,7 +80,7 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
     this.control.properties = {
       rows: 3,
       columns: 3
-    }
+    } as IGridProperties;
   }
 
   override update(): void {

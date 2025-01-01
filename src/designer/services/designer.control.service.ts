@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IGlazeComponent } from 'models/IComponent';
+import { ComponentMetadataService } from 'Registry/ComponentsMetadata';
 import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 import { BehaviorSubject } from 'rxjs';
+import { RenderService } from 'services/render.service';
+import { DesignerTreeService } from './designer-tree.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +14,17 @@ export class DesignerControlService {
   private onControlSelected$: BehaviorSubject<string> =
     new BehaviorSubject<string>('');
 
+  constructor(private renderService: RenderService, private componentMetadata: ComponentMetadataService,
+    private designerTreeService: DesignerTreeService) {
+  }
+
   setSelectedControl(control: string) {
     setTimeout(() => {
       if (this.selectedControl != control) {
         this._selectedControl = control;
         this.onControlSelected$.next(control);
       }
-    },100);
+    }, 100);
   }
 
   get onControlChange$() {
@@ -35,5 +42,11 @@ export class DesignerControlService {
 
   get selectedControl() {
     return this._selectedControl;
+  }
+
+  addControl(elem: HTMLElement, controlName: string, parentId: string, parentProperties: Record<string, unknown>) {
+    const component = this.renderService.renderComponent(elem, this.componentMetadata.getComponent(controlName));
+    component.control.parentProperties = parentProperties;
+    this.designerTreeService.addControl(component.control,parentId);
   }
 }

@@ -20,7 +20,7 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
     properties: {} as T,
   };
 
-  private designerService: DesignerControlService = inject(
+  public designerService: DesignerControlService = inject(
     DesignerControlService,
   );
   constructor() {

@@ -24,3 +24,7 @@ export interface ICoreProperties<T extends ICoreStyle = ICoreStyle> {
 };
 
 export type IParentProperties = Record<string, unknown>;
+
+export interface IGlazeTree extends ICoreProperties {
+    child?: ICoreProperties[];
+}
