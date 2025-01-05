@@ -8,45 +8,59 @@ import { builderComponent } from '../../../decorators/builderComponent';
 import { IGridProperties } from './grid.properties';
 
 @builderComponent({
-  name: "Grid",
-  description: "Grid component",
-  states: [],
-  properties: [
+  name: 'Grid',
+  description: 'Grid component',
+  states: [
     {
-      name: "rows",
-      editorId: "valueEditor",
-      title: "Rows",
-      options: {
-        type: "number",
-      }
+      name: 'default',
     },
     {
-      name: "columns",
-      editorId: "valueEditor",
-      title: "Columns",
+      name:"hover",
+      selector:":hover"
+    }
+  ],
+  properties: [
+    {
+      name: 'rows',
+      editorId: 'valueEditor',
+      title: 'Rows',
       options: {
-        type: "number",
-      }
+        type: 'number',
+      },
+      states: ['default'],
+    },
+    {
+      name: 'columns',
+      editorId: 'valueEditor',
+      title: 'Columns',
+      options: {
+        type: 'number',
+      },
+      states: ['default'],
     },
     {
       name: 'backgroundColor',
       editorId: 'backgroundColorEditor',
       title: 'Background Color',
+      states: ['default',"hover"],
     },
     {
       name: 'border',
       editorId: 'borderEditor',
       title: 'Border',
-    }
-  ]
+    },
+  ],
 })
 @Component({
   selector: 'gl-grid',
   imports: [DropDirective, SelectDirective],
   templateUrl: './grid.component.html',
-  styleUrl: './grid.component.scss'
+  styleUrl: './grid.component.scss',
 })
-export class GridComponent extends GlazeComponent<IGridProperties> implements AfterViewInit {
+export class GridComponent
+  extends GlazeComponent<IGridProperties>
+  implements AfterViewInit
+{
   @ViewChild('elem', { static: true }) elem!: ElementRef<HTMLElement>;
   grid: number[][] = [];
 
@@ -60,17 +74,24 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
   }
 
   private generateGrid(): number[][] {
-    return Array.from({ length: this.properties.rows }, () => Array.from({ length: this.properties.columns }, () => 0));
+    return Array.from({ length: this.properties.rows }, () =>
+      Array.from({ length: this.properties.columns }, () => 0),
+    );
   }
 
   addComponent(componentName: string, row: number, col: number, event: Event) {
-    this.designerService.addControl(event.target as HTMLElement, componentName, this.control.id, { row, col, id: this.control.id });
+    this.designerService.addControl(
+      event.target as HTMLElement,
+      componentName,
+      this.control.id,
+      { row, col, id: this.control.id },
+    );
   }
 
   override buildStyle(): Record<string, string> {
     return StyleCreator.create()
       .buildGridTemplate(this.properties.rows, this.properties.columns)
-      .buildCore(this.properties)
+      .buildCore(this.properties);
   }
 
   onDrop(data: IGlDragData, row: number, col: number) {
@@ -86,5 +107,4 @@ export class GridComponent extends GlazeComponent<IGridProperties> implements Af
     this.grid = this.generateGrid();
     super.update();
   }
-
 }

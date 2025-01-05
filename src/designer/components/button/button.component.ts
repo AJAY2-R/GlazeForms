@@ -7,17 +7,19 @@ import { IButton } from './IButton';
 @builderComponent({
   name: 'Button',
   description: 'Button component',
-  states: [{
-    name: "default",
-  },
-  {
-    name: "hover",
-    selector: ":hover",
-  },
-  {
-    name: "focus",
-    selector: ":focus",
-  }],
+  states: [
+    {
+      name: 'default',
+    },
+    {
+      name: 'hover',
+      selector: ':hover',
+    },
+    {
+      name: 'focus',
+      selector: ':focus',
+    },
+  ],
   properties: [
     {
       name: 'text',
@@ -33,7 +35,7 @@ import { IButton } from './IButton';
       name: 'border',
       editorId: 'borderEditor',
       title: 'Border',
-    }
+    },
   ],
 })
 @Component({

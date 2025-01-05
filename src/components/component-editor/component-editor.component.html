@@ -6,16 +6,18 @@
   </div>
   <div>
     <label for="type">States</label>
-    <select id="type">
-      <option value="default">Default</option>
-      <option value="hover">Hover</option>
-      <option value="focus">Focus</option>
-      <option value="active">Active</option>
+    <select [(ngModel)]="selectedState" (ngModelChange)="onStateChange()">
+      <option *ngFor="let item of states" [value]="item.name">
+        {{ item.name }}
+      </option>
     </select>
   </div>
   @for (property of properties; track $index) {
     <div class="flex p-2">
-        <gl-property-editor [name]="property.editorId" [context]="property"></gl-property-editor>
+      <gl-property-editor
+        [name]="property.editorId"
+        [context]="property"
+      ></gl-property-editor>
     </div>
   }
 </div>
