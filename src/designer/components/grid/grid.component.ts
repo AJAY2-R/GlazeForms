@@ -10,6 +10,7 @@ import { IGridProperties } from './grid.properties';
 @builderComponent({
   name: "Grid",
   description: "Grid component",
+  states: [],
   properties: [
     {
       name: "rows",

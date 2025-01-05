@@ -18,6 +18,7 @@ export function builderComponent(context: IGlazeDesignerContext) {
 export interface IGlazeDesignerContext {
     name: string;
     description: string;
+    states: IState[];
     properties: IGlazeProperty[];
 }
 
@@ -28,4 +29,11 @@ export interface IGlazeProperty {
     options?: Record<string, unknown>;
     value?: unknown;
     defaultValue?: unknown;
+    states?: string[];
+}
+
+export interface IState {
+    name: string,
+    class?: string,
+    selector?: string,
 }

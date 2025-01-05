@@ -8,6 +8,7 @@ import { PropertyEditorService } from 'designer/services/property.editor.service
 @builderComponent({
   name: 'Textblock',
   description: 'Textblock component',
+  states: [],
   properties: [
     {
       name: 'text',

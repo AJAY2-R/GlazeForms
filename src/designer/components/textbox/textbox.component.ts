@@ -6,6 +6,7 @@ import { builderComponent } from 'decorators/builderComponent';
 @builderComponent({
   name: 'Textbox',
   description: 'Textbox component',
+  states: [],
   properties: [
     {
       name: 'text',

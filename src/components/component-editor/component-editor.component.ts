@@ -16,7 +16,7 @@ export class ComponentEditorComponent {
     this.onLoad();
   }
   properties: IGlazeProperty[] = [];
-
+  states: string[] = [];
   private onLoad() {
     this.designerService.onControlChange$.subscribe(() => {
       this.properties = [];
