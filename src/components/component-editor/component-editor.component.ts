@@ -23,7 +23,7 @@ export class ComponentEditorComponent {
   properties: IGlazeProperty[] = [];
   states: IState[] = [];
   context?: IGlazeDesignerContext;
-  selectedState: string = 'default';
+  selectedState: IState = { name: 'default' };
   private onLoad() {
     this.designerService.onControlChange$.subscribe(() => {
       this.properties = [];
@@ -36,23 +36,27 @@ export class ComponentEditorComponent {
   }
 
   private getProperty(key: string) {
-    return this.designerService.getProperties()?.[key];
+    const value = this.designerService.getProperty(key, this.selectedState.name !== 'default' ? this.selectedState.name : undefined);
+    return value;
   }
 
   onPropertyChange(state: string) {
     if (this.context) {
       this.properties = this.context.properties
-        .filter((prop) => prop?.editorId)
+        .filter((prop) => prop?.editorId && (!prop.states || prop.states.includes(state)))
         .map((prop) => ({
           ...prop,
           value: this.getProperty(prop.name),
         }))
-        .filter((key) => !key.states || key.states.includes(state));
+
     }
   }
-  onStateChange() {
-    if (this.selectedState) {
-      this.onPropertyChange(this.selectedState);
+
+  onStateChange(event: Event) {
+    const state = (event.target as HTMLSelectElement).value;
+    if (state) {
+      this.selectedState = this.states.find((s) => s.name === state) || { name: 'default' };
+      this.onPropertyChange(state);
     }
   }
 }

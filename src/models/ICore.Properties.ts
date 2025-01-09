@@ -6,6 +6,7 @@ export interface ICoreStyle {
   border?: IBorder;
   margin?: IMargin;
   padding?: IPadding;
+  states?: unknown;
   [key: string]: unknown;
 }
 export interface IControlSize {

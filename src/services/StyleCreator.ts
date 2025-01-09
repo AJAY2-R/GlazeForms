@@ -40,6 +40,5 @@ export class StyleCreator {
     buildCore(properties: ICoreStyle) {
         return this.buildBackground(properties.backgroundColor)
             .buildBorder(properties.border)
-            .properties;
     }
 }

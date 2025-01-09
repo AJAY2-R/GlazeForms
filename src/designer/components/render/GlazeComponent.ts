@@ -1,7 +1,12 @@
-import { inject, InjectionToken, Injector } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { inject, Injector } from '@angular/core';
+import { IState } from 'decorators/builderComponent';
 import { DesignerControlService } from 'designer/services/designer.control.service';
-import { ICoreProperties, IGlazeComponent } from 'models/IComponent';
+import { COMPONENT_ID, getUID } from 'designer/services/guid';
+import { getGlazeStyle } from 'designer/services/style.service';
+import { ICoreProperties, IGlazeComponent, IGlazeStyle } from 'models/IComponent';
 import { ICoreStyle } from 'models/ICore.Properties';
+import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 import { StyleService } from 'services/style.service';
 import { StyleCreator } from 'services/StyleCreator';
 
@@ -17,7 +22,9 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
     type: '',
     parentProperties: {},
     name: '',
-    properties: {} as T,
+    properties: {
+      states: {},
+    } as T,
   };
 
   public designerService: DesignerControlService = inject(
@@ -26,24 +33,26 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
   constructor() {
     this.initializeProperty();
     this.designerService.setSelectedControl(this.control.id);
+    if (!this.properties.states) {
+      this.properties.states = {};
+    }
   }
   render() {
     console.log('render');
   }
 
-  update() {
-    this.styleService.buildStyle(this.control.id, this.buildStyle());
+  update(properties: ICoreStyle) {
+    this.styleService.buildStyle(this.control.id, this.buildStyles());
+    console.log(this.properties)
   }
 
   destroy() {
     console.log('destroy');
   }
 
-  buildStyle() {
-    return StyleCreator.create()
-      .buildBackground(this.properties.backgroundColor)
-      .buildBorder(this.properties.border)
-      .properties;
+  buildStyle(properties: ICoreStyle, stateProperties?: IState): IGlazeStyle {
+    const styleProperties = StyleCreator.create().buildCore(properties).properties;
+    return getGlazeStyle(styleProperties, stateProperties?.class, stateProperties?.selector);
   }
 
   public initializeProperty(): void { }
@@ -52,31 +61,42 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
     return this.control.properties;
   }
 
-  setProperty(propertyName: string, value: unknown) {
+  setProperty(propertyName: string, value: unknown): void {
     (this.control.properties as ICoreStyle)[propertyName] = value;
-    this.update();
+    this.update(this.control.properties);
   }
 
-  getProperty(propertyName: string): unknown {
-    return (this.control.properties as ICoreStyle)[propertyName];
-  }
-
-}
-
-export const COMPONENT_ID = new InjectionToken<string>('COMPONENT_ID');
-
-export function getUID(): string {
-  const getRandomLetters = (length: number): string => {
-    const chars = 'abcdefghijklmnopqrstuvwxyz';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+  setStateProperty(propertyName: string, value: unknown, state: IState): void {
+    const properties = (this.control.properties.states as Record<string, ICoreStyle>);
+    if (!properties[state.name]) {
+      properties[state.name] = {};
     }
-    return result;
-  };
-  const randomPart = getRandomLetters(8);
-  const timestampPart = Date.now()
-    .toString(36)
-    .replace(/\d/g, (d) => String.fromCharCode(97 + parseInt(d, 10)));
-  return `${randomPart}${timestampPart}`;
+    properties[state.name][propertyName] = value;
+    this.update(this.control.properties);
+  }
+
+  getProperty(propertyName: string, state?: string): unknown {
+    if (!state) {
+      return (this.control.properties as ICoreStyle)[propertyName]
+    } else {
+      return (this.control.properties.states as Record<string, ICoreStyle>)?.[state]?.[propertyName]
+    }
+  }
+
+  private buildStyles() {
+    const styles: IGlazeStyle[] = [];
+    const context = GlazeControlRegistry.instance.getComponent(
+      this.designerService.selectedControl,
+    )?.context
+    styles.push(this.buildStyle(this.control.properties));
+    if (this.control.properties.states) {
+      Object.keys(this.control.properties.states).forEach((state) => {
+        const stateProperties = context?.states?.find((s) => s.name === state);
+        styles.push(this.buildStyle((this.control.properties.states as Record<string, ICoreStyle>)[state], stateProperties));
+      });
+    }
+    return styles;
+  }
+
 }
+

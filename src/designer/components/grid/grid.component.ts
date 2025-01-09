@@ -4,8 +4,10 @@ import { DropDirective } from 'designer/directives/drop.directive';
 import { SelectDirective } from 'designer/directives/select.directive';
 import { GlazeComponent } from 'designer/components/render/GlazeComponent';
 import { StyleCreator } from 'services/StyleCreator';
-import { builderComponent } from '../../../decorators/builderComponent';
+import { builderComponent, IState } from '../../../decorators/builderComponent';
 import { IGridProperties } from './grid.properties';
+import { IGlazeStyle } from 'models/IComponent';
+import { getGlazeStyle } from 'designer/services/style.service';
 
 @builderComponent({
   name: 'Grid',
@@ -15,8 +17,8 @@ import { IGridProperties } from './grid.properties';
       name: 'default',
     },
     {
-      name:"hover",
-      selector:":hover"
+      name: "hover",
+      selector: ":hover"
     }
   ],
   properties: [
@@ -42,7 +44,7 @@ import { IGridProperties } from './grid.properties';
       name: 'backgroundColor',
       editorId: 'backgroundColorEditor',
       title: 'Background Color',
-      states: ['default',"hover"],
+      states: ['default', "hover"],
     },
     {
       name: 'border',
@@ -59,8 +61,7 @@ import { IGridProperties } from './grid.properties';
 })
 export class GridComponent
   extends GlazeComponent<IGridProperties>
-  implements AfterViewInit
-{
+  implements AfterViewInit {
   @ViewChild('elem', { static: true }) elem!: ElementRef<HTMLElement>;
   grid: number[][] = [];
 
@@ -70,7 +71,7 @@ export class GridComponent
   }
 
   ngAfterViewInit() {
-    super.update();
+    super.update(this.properties);
   }
 
   private generateGrid(): number[][] {
@@ -88,10 +89,13 @@ export class GridComponent
     );
   }
 
-  override buildStyle(): Record<string, string> {
-    return StyleCreator.create()
-      .buildGridTemplate(this.properties.rows, this.properties.columns)
-      .buildCore(this.properties);
+  override buildStyle(properties: IGridProperties, stateProperties?: IState): IGlazeStyle {
+    const style = StyleCreator.create()
+      .buildCore(properties);
+    if (properties.rows && properties.columns) {
+      style.buildGridTemplate(properties.rows, properties.columns);
+    }
+    return getGlazeStyle(style.properties, stateProperties?.class, stateProperties?.selector);
   }
 
   onDrop(data: IGlDragData, row: number, col: number) {
@@ -105,6 +109,6 @@ export class GridComponent
 
   override update(): void {
     this.grid = this.generateGrid();
-    super.update();
+    super.update(this.properties);
   }
 }

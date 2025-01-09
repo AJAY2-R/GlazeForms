@@ -3,7 +3,7 @@
   <div class="flex flex-col">
     <div class="flex gap-4">
       <div class="flex flex-col">
-        <label for="">Style</label>
+        <p>Style</p>
         <select class="ring-1 rounded-md" [(ngModel)]="value.style" (ngModelChange)="onChange()">
           <option value="none">None</option>
           <option value="solid">Solid</option>
@@ -17,16 +17,16 @@
         </select>
       </div>
       <div class="flex flex-col">
-        <label for="">Width</label>
+        <p>Width</p>
         <gl-size-mapper [(size)]="value.width" (sizeChange)="onChange()"></gl-size-mapper>
       </div>
     </div>
     <div class="flex flex-col">
-      <label for="">Color</label>
+      <p>Color</p>
       <input type="color" class="ring-1 rounded-md" [(ngModel)]="value.color" (ngModelChange)="onChange()" />
     </div>
     <div class="flex flex-col">
-      <label for="">Radius</label>
+      <p>Radius</p>
       <gl-size-mapper [(size)]="value.borderRadius" (sizeChange)="onChange()"></gl-size-mapper>
   </div>
 </div>

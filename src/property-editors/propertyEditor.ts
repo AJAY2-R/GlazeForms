@@ -1,5 +1,5 @@
 import { inject } from "@angular/core";
-import { IGlazeProperty } from "decorators/builderComponent";
+import { IGlazeProperty, IState } from "decorators/builderComponent";
 import { DesignerControlService } from "designer/services/designer.control.service";
 import { IPropertyEditor } from "models/IPropertyEditor";
 import { EDITOR_CONTEXT } from 'property-editors/propertyEditors';
@@ -25,6 +25,7 @@ export class PropertyEditor<T = unknown> implements IPropertyEditor {
         this.initialize();
     }
     value!: T;
+    state?: IState;
 
     initialize(): void {
         if (this.context) {
@@ -39,6 +40,9 @@ export class PropertyEditor<T = unknown> implements IPropertyEditor {
      */
     update(value: unknown = this.value): void {
         this.value = value as T;
-        this.designerService.setControlProperty(this.propertyName, this.value);
+        if (this.state?.name && this.state?.name !== 'default')
+            this.designerService.setControlStateProperty(this.propertyName, this.value, this.state);
+        else
+            this.designerService.setControlProperty(this.propertyName, this.value);
     }
 }

@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RenderService } from 'services/render.service';
 import { DesignerTreeService } from './designer-tree.service';
 import { PropertyEditorService } from './property.editor.service';
+import { IState } from 'decorators/builderComponent';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,11 @@ export class DesignerControlService {
     return control?.component.properties;
   }
 
+  getProperty(propertyName: string, state?: string, controlId: string = this._selectedControl,) {
+    const control = GlazeControlRegistry.instance.getComponent(controlId);
+    return control?.component.getProperty(propertyName, state);
+  }
+
   getControlComponent(controlId: string = this._selectedControl): IGlazeComponent {
     return GlazeControlRegistry.instance.getComponent(controlId)!.component;
   }
@@ -56,4 +62,14 @@ export class DesignerControlService {
     const control = GlazeControlRegistry.instance.getComponent(controlId);
     control?.component.setProperty(propertyName, value);
   }
+
+  setControlStateProperty(propertyName: string, value: unknown, state: IState, controlId: string = this._selectedControl) {
+    const control = GlazeControlRegistry.instance.getComponent(controlId);
+    control?.component.setStateProperty(propertyName, value, state);
+  }
+
+  getChildComponents(controlId: string) {
+    return this.designerTreeService.getChildComponents(controlId);
+  }
+
 }

@@ -1,12 +1,12 @@
 <div class="flex flex-col">
   <h1>Properties</h1>
   <div>
-    <label for="name">Name</label>
+    <p>Name</p>
     <input type="text" id="name" />
   </div>
   <div>
-    <label for="type">States</label>
-    <select [(ngModel)]="selectedState" (ngModelChange)="onStateChange()">
+    <p>States</p>
+    <select (change)="onStateChange($event)">
       <option *ngFor="let item of states" [value]="item.name">
         {{ item.name }}
       </option>
@@ -17,6 +17,7 @@
       <gl-property-editor
         [name]="property.editorId"
         [context]="property"
+        [state]="selectedState"
       ></gl-property-editor>
     </div>
   }

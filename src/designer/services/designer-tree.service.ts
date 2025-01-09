@@ -59,4 +59,8 @@ export class DesignerTreeService {
     return JSON.parse(localStorage.getItem('designerTree') || '{}');
   }
 
+  getChildComponents(controlId: string) {
+    return this.controlTreeMap.get(controlId)?.self.child || [];
+  }
+
 }

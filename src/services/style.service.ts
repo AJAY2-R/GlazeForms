@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
+import { IGlazeStyle } from 'models/IComponent';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class StyleService {
 
   constructor(@Inject(DOCUMENT) private document: Document) { }
 
-  public buildStyle(id: string, style: Record<string, string>) {
+  public buildStyle(id: string, style: IGlazeStyle[]) {
     if (this._styleElements.has(id)) {
       this._styleElements.get(id)!.innerHTML = this.generateStyle(id, style);
     } else {
@@ -26,12 +27,21 @@ export class StyleService {
     return styleElement;
   }
 
-  private generateStyle(id: string, properties: Record<string, string>) {
-    let style = `[${id}] { `;
+  private generateStyle(id: string, properties: IGlazeStyle[]): string {
+    return properties.map((style) => {
+      return this.getStyle(this.buildStyleClass(id, style.className, style.selector), style.styles);
+    }).join('\n');
+  }
+
+  private getStyle(styleClass: string, properties: Record<string, string>) {
+    let style = `${styleClass} { `;
     for (const [key, value] of Object.entries(properties)) {
       style += `${key}: ${value}; `;
     }
     return style + ' }';
   }
 
+  buildStyleClass(id: string, className?: string, selector?: string) {
+    return `[${id}]${className || ''}${selector || ''}`;
+  }
 }
