@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { DragDirective } from 'designer/directives/drag.directive';
 import { DesignerTreeService } from 'designer/services/designer-tree.service';
 import { ComponentMetadataService } from 'Registry/ComponentsMetadata';
-import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 
 @Component({
   selector: 'gl-controls',
@@ -12,18 +11,16 @@ import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 })
 export class ControlsComponent {
   controls: string[] = [];
-  constructor(private componentMetadata: ComponentMetadataService,private designerTreeService: DesignerTreeService) {
+  constructor(private componentMetadata: ComponentMetadataService, private designerTreeService: DesignerTreeService) {
     this.controls = this.componentMetadata.components;
   }
 
-  onSave(){
+  onSave() {
     this.designerTreeService.saveData();
-    GlazeControlRegistry.instance.saveRegistry();
   }
 
-  onClearSavedData(){
+  onClearSavedData() {
     this.designerTreeService.clearSavedTree();
-    GlazeControlRegistry.instance.clearRegistry();
   }
 
 }

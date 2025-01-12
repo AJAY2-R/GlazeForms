@@ -6,7 +6,7 @@ import { ITextblock } from './textblock';
 import { PropertyEditorService } from 'designer/services/property.editor.service';
 
 @builderComponent({
-  name: 'Textblock',
+  name: 'textblock',
   description: 'Textblock component',
   states: [],
   properties: [

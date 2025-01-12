@@ -27,9 +27,8 @@ export class ComponentEditorComponent {
   private onLoad() {
     this.designerService.onControlChange$.subscribe(() => {
       this.properties = [];
-      this.context = GlazeControlRegistry.instance.getComponent(
-        this.designerService.selectedControl,
-      )?.context;
+      const type = this.designerService.getControlType()!;
+      this.context = GlazeControlRegistry.instance.getContext(type);
       this.states = this.context?.states || [];
       this.onPropertyChange('default');
     });

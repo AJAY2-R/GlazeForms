@@ -19,7 +19,7 @@ export class PropertyEditorComponent implements OnChanges {
   private viewContainerRef = inject(ViewContainerRef);
   private renderService = inject(RenderService);
   private propertyEditorService = inject(PropertyEditorService);
-  
+
   ngOnChanges() {
     this.renderEditor();
   }

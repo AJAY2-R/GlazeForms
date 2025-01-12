@@ -1,18 +1,15 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
-import { IGlDragData } from 'designer/directives/drag.model';
-import { DropDirective } from 'designer/directives/drop.directive';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { SelectDirective } from 'designer/directives/select.directive';
 import { GlazeComponent } from 'designer/components/render/GlazeComponent';
 import { StyleCreator } from 'services/StyleCreator';
 import { builderComponent, IState } from '../../../decorators/builderComponent';
 import { IGridProperties } from './grid.properties';
-import { IGlazeStyle, IGridParentProperties } from 'models/IComponent';
+import { IGlazeStyle } from 'models/IComponent';
 import { getGlazeStyle } from 'designer/services/style.service';
-import { DesignerTreeService } from 'designer/services/designer-tree.service';
 import { GridCellComponent } from '../grid-cell/grid-cell.component';
 
 @builderComponent({
-  name: 'Grid',
+  name: 'grid',
   description: 'Grid component',
   states: [
     {
@@ -63,8 +60,7 @@ import { GridCellComponent } from '../grid-cell/grid-cell.component';
 })
 export class GridComponent
   extends GlazeComponent<IGridProperties>
-  implements AfterViewInit
-{
+  implements AfterViewInit {
   @ViewChild('elem', { static: true }) elem!: ElementRef<HTMLElement>;
   grid: number[][] = [];
 
@@ -83,14 +79,7 @@ export class GridComponent
     );
   }
 
-  addComponent(componentName: string, row: number, col: number, event: Event) {
-    this.designerService.addControl(
-      event.target as HTMLElement,
-      componentName,
-      this.control.id,
-      { parentId: this.control.id, row, column: col } as IGridParentProperties,
-    );
-  }
+
 
   override buildStyle(
     properties: IGridProperties,
@@ -107,10 +96,6 @@ export class GridComponent
     );
   }
 
-  onDrop(data: IGlDragData, row: number, col: number) {
-    this.addComponent(data.type, row, col, data.event);
-  }
-
   override initializeProperty(): void {
     this.control.properties.rows = 3;
     this.control.properties.columns = 3;
@@ -121,7 +106,4 @@ export class GridComponent
     super.update(this.properties);
   }
 
-  initializeChildComponent() {}
-
-  
 }

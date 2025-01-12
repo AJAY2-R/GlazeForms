@@ -5,9 +5,10 @@ import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 export function builderComponent(context: IGlazeDesignerContext) {
   return function (target: Type<IGlazeComponent>) {
     initializeDefaultContext(context);
+    GlazeControlRegistry.instance.addContext(context.name, context);
     const onInit = target.prototype.ngOnInit;
     target.prototype.ngOnInit = function (...args: unknown[]) {
-      GlazeControlRegistry.instance.addComponent(this.control.id, this, context);
+      this.control.type = context.name;
       if (onInit) {
         onInit.apply(this, args);
       }

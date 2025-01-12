@@ -51,7 +51,7 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle> implements IGlaze
     return getGlazeStyle(styleProperties, stateProperties?.class, stateProperties?.selector);
   }
 
-  public initializeProperty(): void {}
+  public initializeProperty(): void { }
 
   get properties(): T {
     return this.control.properties;
@@ -83,9 +83,7 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle> implements IGlaze
 
   private buildStyles() {
     const styles: IGlazeStyle[] = [];
-    const context = GlazeControlRegistry.instance.getComponent(
-      this.designerService.selectedControl,
-    )?.context;
+    const context = GlazeControlRegistry.instance.getContext(this.control.type);
     styles.push(this.buildStyle(this.control.properties));
     if (this.control.properties.states) {
       Object.keys(this.control.properties.states).forEach((state) => {
@@ -103,5 +101,6 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle> implements IGlaze
 
   loadProperties(properties: ICoreProperties) {
     this.control = properties as ICoreProperties<T>;
+    this.update(this.control.properties);
   }
 }

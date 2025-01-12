@@ -15,6 +15,7 @@ export class SelectDirective implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.elementRef.nativeElement.setAttribute(this.id(), '');
+    this.designerService.setSelectedControl(this.id());
     this.toggleHighlight(true);
   }
 

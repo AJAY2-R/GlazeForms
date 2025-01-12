@@ -4,7 +4,7 @@ import { GlazeComponent } from 'designer/components/render/GlazeComponent';
 import { builderComponent } from 'decorators/builderComponent';
 
 @builderComponent({
-  name: 'Textbox',
+  name: 'textbox',
   description: 'Textbox component',
   states: [],
   properties: [

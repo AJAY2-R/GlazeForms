@@ -1,52 +1,42 @@
-import { inject } from '@angular/core';
 import { IGlazeComponent } from '../models/IComponent';
 import { IGlazeDesignerContext } from 'decorators/builderComponent';
-import { DataSaveService } from 'services/data-save.service';
-import { isEmpty } from 'lodash';
 
 export class GlazeControlRegistry {
-  private _glazeMap: Map<string, { component: IGlazeComponent; context: IGlazeDesignerContext }> =
+  private _glazeContextMap: Map<string, IGlazeDesignerContext> =
     new Map();
+  private _glazeComponentMap: Map<string, IGlazeComponent> = new Map();
   private static _instance: GlazeControlRegistry;
-  private dataSaveService = inject(DataSaveService);
 
-  public addComponent(
-    id: string,
-    component: IGlazeComponent,
-    context: IGlazeDesignerContext,
-  ): void {
-    this._glazeMap.set(id, { component, context });
+  public addContext(id: string, context: IGlazeDesignerContext): void {
+    this._glazeContextMap.set(id, context);
+  }
+
+  public addComponent(id: string, component: IGlazeComponent): void {
+    this._glazeComponentMap.set(id, component);
   }
 
   public static get instance(): GlazeControlRegistry {
     if (!this._instance) {
       this._instance = new GlazeControlRegistry();
-      this._instance.loadSavedRegistry();
     }
     return this._instance;
   }
 
-  public getComponent(name: string) {
-    return this._glazeMap.get(name);
+  public getComponent(id: string) {
+    return this._glazeComponentMap.get(id);
   }
 
   public getAllComponents() {
-    return this._glazeMap;
+    return this._glazeComponentMap;
   }
 
-  private loadSavedRegistry() {
-    const registry =
-      this.dataSaveService.getMapData('glazeRegistry');
-    if (!isEmpty(registry)) {
-      this._glazeMap = registry;
-    }
+  public getContext(id: string) {
+    return this._glazeContextMap.get(id);
   }
 
-  saveRegistry() {
-    this.dataSaveService.saveMapData('glazeRegistry', this._glazeMap);
+  public updateComponent(oldId: string, newId: string, component: IGlazeComponent) {
+    this._glazeComponentMap.set(newId, component);
+    this._glazeComponentMap.delete(oldId);
   }
 
-  clearRegistry() {
-    this.dataSaveService.clearData('glazeRegistry');
-  }
 }

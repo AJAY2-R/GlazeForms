@@ -5,7 +5,7 @@ import { builderComponent } from '../../../decorators/builderComponent';
 import { IButton } from './IButton';
 
 @builderComponent({
-  name: 'Button',
+  name: 'button',
   description: 'Button component',
   states: [
     {
