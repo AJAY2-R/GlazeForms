@@ -1,7 +1,7 @@
 <div class="gl-grid" #elem [glSelect]="control.id">
   @for (rows of grid; track $index;let rowIdx = $index) { 
-    @for (cell of rows;track $index;let cellIdx = $index) {
-      <div class="gl-grid-cell" glDrop (ondrop)="onDrop($event, rowIdx, cellIdx)"></div>
+    @for (cell of rows;track $index;let colIdx = $index) {
+      <gl-grid-cell [id]="control.id" [row]="rowIdx" [col]="colIdx" ></gl-grid-cell>
     } 
   }
 </div>

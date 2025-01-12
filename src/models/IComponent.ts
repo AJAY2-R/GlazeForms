@@ -13,6 +13,7 @@ export abstract class IGlazeComponent<T extends ICoreStyle = ICoreStyle> {
     public abstract setProperty(propertyName: string, value: unknown): void;
     public abstract setStateProperty(propertyName: string, value: unknown, state: IState): void;
     public abstract getProperty(propertyName: string, state?: string): unknown;
+    public abstract loadProperties(properties: ICoreProperties<T>): void;
 }
 
 export type IComponent = Type<IGlazeComponent>
@@ -25,7 +26,16 @@ export interface ICoreProperties<T extends ICoreStyle = ICoreStyle> {
     properties: T;
 };
 
-export type IParentProperties = Record<string, unknown>;
+export interface IParentProperties{
+    parentId: string;
+}
+
+export interface IGridParentProperties extends IParentProperties {
+    row: number;
+    column: number;
+    rowSpan?: number;
+    columnSpan?: number;
+}
 
 export interface IGlazeTree extends ICoreProperties {
     child?: ICoreProperties[];

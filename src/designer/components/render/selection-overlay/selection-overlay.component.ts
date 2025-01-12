@@ -33,8 +33,8 @@ export class SelectionOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.resizeObserver.disconnect();
-    this.mutationObserver.disconnect();
+    this.resizeObserver?.disconnect();
+    this.mutationObserver?.disconnect();
   }
 
 }

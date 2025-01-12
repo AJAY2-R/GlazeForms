@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DragDirective } from 'designer/directives/drag.directive';
+import { DesignerTreeService } from 'designer/services/designer-tree.service';
 import { ComponentMetadataService } from 'Registry/ComponentsMetadata';
 import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 
@@ -11,11 +12,18 @@ import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 })
 export class ControlsComponent {
   controls: string[] = [];
-  constructor(private componentMetadata: ComponentMetadataService) {
-    this.controls = componentMetadata.components;
+  constructor(private componentMetadata: ComponentMetadataService,private designerTreeService: DesignerTreeService) {
+    this.controls = this.componentMetadata.components;
   }
 
-  onClick() {
-    console.log(GlazeControlRegistry.instance.getAllComponents());
+  onSave(){
+    this.designerTreeService.saveData();
+    GlazeControlRegistry.instance.saveRegistry();
   }
+
+  onClearSavedData(){
+    this.designerTreeService.clearSavedTree();
+    GlazeControlRegistry.instance.clearRegistry();
+  }
+
 }

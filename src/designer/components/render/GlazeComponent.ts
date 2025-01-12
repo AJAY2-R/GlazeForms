@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { inject, Injector } from '@angular/core';
+import { AfterViewInit, Component, inject, Injector } from '@angular/core';
 import { IState } from 'decorators/builderComponent';
 import { DesignerControlService } from 'designer/services/designer.control.service';
 import { COMPONENT_ID, getUID } from 'designer/services/guid';
@@ -10,8 +10,7 @@ import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 import { StyleService } from 'services/style.service';
 import { StyleCreator } from 'services/StyleCreator';
 
-export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
-  implements IGlazeComponent {
+export class GlazeComponent<T extends ICoreStyle = ICoreStyle> implements IGlazeComponent {
   styleService = inject(StyleService);
   injector = Injector.create({
     providers: [{ provide: COMPONENT_ID, useFactory: getUID }],
@@ -20,30 +19,27 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
   public control: ICoreProperties<T> = {
     id: this.injector.get(COMPONENT_ID),
     type: '',
-    parentProperties: {},
+    parentProperties: { parentId: '' },
     name: '',
     properties: {
       states: {},
     } as T,
   };
 
-  public designerService: DesignerControlService = inject(
-    DesignerControlService,
-  );
+  public designerService: DesignerControlService = inject(DesignerControlService);
   constructor() {
     this.initializeProperty();
-    this.designerService.setSelectedControl(this.control.id);
     if (!this.properties.states) {
       this.properties.states = {};
     }
   }
+
   render() {
     console.log('render');
   }
 
   update(properties: ICoreStyle) {
     this.styleService.buildStyle(this.control.id, this.buildStyles());
-    console.log(this.properties)
   }
 
   destroy() {
@@ -55,7 +51,7 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
     return getGlazeStyle(styleProperties, stateProperties?.class, stateProperties?.selector);
   }
 
-  public initializeProperty(): void { }
+  public initializeProperty(): void {}
 
   get properties(): T {
     return this.control.properties;
@@ -67,7 +63,7 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
   }
 
   setStateProperty(propertyName: string, value: unknown, state: IState): void {
-    const properties = (this.control.properties.states as Record<string, ICoreStyle>);
+    const properties = this.control.properties.states as Record<string, ICoreStyle>;
     if (!properties[state.name]) {
       properties[state.name] = {};
     }
@@ -77,9 +73,11 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
 
   getProperty(propertyName: string, state?: string): unknown {
     if (!state) {
-      return (this.control.properties as ICoreStyle)[propertyName]
+      return (this.control.properties as ICoreStyle)[propertyName];
     } else {
-      return (this.control.properties.states as Record<string, ICoreStyle>)?.[state]?.[propertyName]
+      return (this.control.properties.states as Record<string, ICoreStyle>)?.[state]?.[
+        propertyName
+      ];
     }
   }
 
@@ -87,16 +85,23 @@ export class GlazeComponent<T extends ICoreStyle = ICoreStyle>
     const styles: IGlazeStyle[] = [];
     const context = GlazeControlRegistry.instance.getComponent(
       this.designerService.selectedControl,
-    )?.context
+    )?.context;
     styles.push(this.buildStyle(this.control.properties));
     if (this.control.properties.states) {
       Object.keys(this.control.properties.states).forEach((state) => {
         const stateProperties = context?.states?.find((s) => s.name === state);
-        styles.push(this.buildStyle((this.control.properties.states as Record<string, ICoreStyle>)[state], stateProperties));
+        styles.push(
+          this.buildStyle(
+            (this.control.properties.states as Record<string, ICoreStyle>)[state],
+            stateProperties,
+          ),
+        );
       });
     }
     return styles;
   }
 
+  loadProperties(properties: ICoreProperties) {
+    this.control = properties as ICoreProperties<T>;
+  }
 }
-

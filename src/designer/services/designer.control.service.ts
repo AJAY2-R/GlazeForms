@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { IGlazeComponent } from 'models/IComponent';
+import { Injectable, ViewContainerRef } from '@angular/core';
+import { IGlazeComponent, IParentProperties } from 'models/IComponent';
 import { ComponentMetadataService } from 'Registry/ComponentsMetadata';
 import { GlazeControlRegistry } from 'Registry/GlazeControlRegistry';
 import { BehaviorSubject } from 'rxjs';
@@ -52,9 +52,10 @@ export class DesignerControlService {
     return this._selectedControl;
   }
 
-  addControl(elem: HTMLElement, controlName: string, parentId: string, parentProperties: Record<string, unknown>) {
-    const component = this.renderService.renderComponent(elem, this.componentMetadata.getComponent(controlName));
+  addControl(elem: HTMLElement|ViewContainerRef, controlName: string, parentId: string, parentProperties: IParentProperties) {
+    const component = this.renderComponent(elem, controlName);
     component.control.parentProperties = parentProperties;
+    component.control.type = controlName;
     this.designerTreeService.addControl(component.control, parentId);
   }
 
@@ -72,4 +73,7 @@ export class DesignerControlService {
     return this.designerTreeService.getChildComponents(controlId);
   }
 
+  renderComponent(elem:HTMLElement | ViewContainerRef,controlName: string) {
+    return this.renderService.renderComponent(elem, this.componentMetadata.getComponent(controlName));
+  }
 }

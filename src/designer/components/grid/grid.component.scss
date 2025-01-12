@@ -8,19 +8,4 @@
   grid-gap: 10px;
   height: 100%;
   width: 100%;
-
-  .gl-grid-cell {
-    width: 1fr;
-    padding: 2px;
-    min-height: 25px;
-    border: 1px dashed #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cell-content {
-    display: none;
-    cursor: pointer;
-  }
 }

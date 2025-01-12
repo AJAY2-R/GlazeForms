@@ -1,0 +1,23 @@
+.gl-grid-cell {
+  width: 1fr;
+  padding: 2px;
+  min-height: 25px;
+  border: 1px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  &.gl-cell-highlight {
+    border: dashed 1px blue;
+  }
+}
+
+.cell-content {
+  display: none;
+  cursor: pointer;
+}
+
+.g-cell {
+  width: 100%;
+  height: 100%;
+}

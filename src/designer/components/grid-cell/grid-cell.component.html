@@ -1,0 +1,6 @@
+<div glDrop (ondrop)="onDrop($event)" [ngClass]="{ 'gl-grid-cell': !hasChild }">
+  @if (hasChild) {
+    <ng-container *ngTemplateOutlet="child"> </ng-container>
+  }
+</div>
+<ng-template #child></ng-template>

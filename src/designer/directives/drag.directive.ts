@@ -20,7 +20,6 @@ export class DragDirective {
 
   @HostListener('drop', ['$event']) onDrop(event: DragEvent) {
     event.preventDefault();
-    console.log(event.dataTransfer!.getData('text'));
   }
 
 }
