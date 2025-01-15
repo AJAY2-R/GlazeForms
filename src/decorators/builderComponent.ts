@@ -37,6 +37,7 @@ export interface IGlazeProperty {
   value?: unknown;
   defaultValue?: unknown;
   states?: string[];
+  type: 'property' | 'style';
 }
 
 export interface IState {

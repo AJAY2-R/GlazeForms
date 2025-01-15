@@ -30,6 +30,7 @@ export class ComponentEditorComponent {
       const type = this.designerService.getControlType()!;
       this.context = GlazeControlRegistry.instance.getContext(type);
       this.states = this.context?.states || [];
+      this.selectedState = { name: 'default' };
       this.onPropertyChange('default');
     });
   }
@@ -42,7 +43,7 @@ export class ComponentEditorComponent {
   onPropertyChange(state: string) {
     if (this.context) {
       this.properties = this.context.properties
-        .filter((prop) => prop?.editorId && (!prop.states || prop.states.includes(state)))
+        .filter((prop) => prop?.editorId && (!prop.states || prop.states.includes(state)) && (state === 'default' || prop.type !== 'property'))
         .map((prop) => ({
           ...prop,
           value: this.getProperty(prop.name),

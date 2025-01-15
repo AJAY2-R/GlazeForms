@@ -29,6 +29,7 @@ import { GridCellComponent } from '../grid-cell/grid-cell.component';
         type: 'number',
       },
       states: ['default'],
+      type: "property"
     },
     {
       name: 'columns',
@@ -38,17 +39,20 @@ import { GridCellComponent } from '../grid-cell/grid-cell.component';
         type: 'number',
       },
       states: ['default'],
+      type: "property"
     },
     {
       name: 'backgroundColor',
       editorId: 'backgroundColorEditor',
       title: 'Background Color',
       states: ['default', 'hover'],
+      type: "style"
     },
     {
       name: 'border',
       editorId: 'borderEditor',
       title: 'Border',
+      type: "style"
     },
   ],
 })

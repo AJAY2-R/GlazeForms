@@ -12,16 +12,19 @@ import { builderComponent } from 'decorators/builderComponent';
       name: 'text',
       editorId: 'valueEditor',
       title: 'Text',
+      type: "property"
     },
     {
       name: 'backgroundColor',
       editorId: 'backgroundColorEditor',
       title: 'Background Color',
+      type: "style"
     },
     {
       name: 'border',
       editorId: 'borderEditor',
       title: 'Border',
+      type: "style"
     }
   ],
 })
